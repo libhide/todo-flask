@@ -2,8 +2,8 @@ todo
 ====
 A todo application built using Flask.
 
-Requirements (refer to the requirements.txt file)
------------
+Requirements
+------------
 - Flask==0.10.1
 - Flask-Gravatar==0.4.1
 - Flask-Login==0.2.11
