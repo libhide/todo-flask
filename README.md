@@ -1,3 +1,3 @@
 todo
 ====
-A simple JS-centric todo application build using Flask.
+A todo application built using Flask.
