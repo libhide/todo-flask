@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='signup.css') }}">
+{% endblock %}
+
+{% block content %}
+  <div id="wrapper">
+    <form role="form" action="" method="POST" name="signup">
+      {{ form.hidden_tag() }}
+      <h2 style="text-align: center; margin: 0 0 30px 0;">Password Reset</h2>
+      <div class="form-group">
+        <label for="old_password">Old Password</label>
+        <input type="password" name="old_password" class="form-control" id="old_password" placeholder="Old Password" autofocus>
+      </div>
+      {% for error in form.old_password.errors %}
+        <span class="error">[{{ error }}]</span>
+      {% endfor %}
+      <div class="form-group">
+        <label for="new_password">New Password</label>
+        <input type="password" name="new_password" class="form-control" id="new_password" placeholder="New Password">
+      </div>
+      {% for error in form.new_password.errors %}
+        <span class="error">[{{ error }}]</span>
+      {% endfor %}
+      <div class="form-group">
+        <label for="new_password_confirm">Confirm Password</label>
+        <input type="password" name="new_password_confirm" class="form-control" id="new_password_confirm" placeholder="Confirm Password">
+      </div>
+      {% for error in form.new_password_confirm.errors %}
+        <span class="error">[{{ error }}]</span>
+      {% endfor %}
+      <button style="margin-top: 30px;" type="submit" class="btn btn-primary btn-block">Reset Password</button>
+    </form>
+  </div>
+{% endblock %}

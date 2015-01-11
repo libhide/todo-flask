@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='profile.css') }}">
+{% endblock %}
+
+{% block content %}
+  <div id="wrapper">
+    <div class="row">
+      <div class="col-md-6 user-img">
+        {% for email in email %}
+        <img src='{{ email| lower | gravatar }}' class="img-responsive user-pic" alt="Profile Image">
+        {% endfor %}
+        <h2 style="text-align: center; margin-top: 30px;">{{ name }}</h2>
+      </div>
+      <div class="col-md-6 user-options">
+        <div>
+          <a href="/pw-reset"><button class="btn btn-primary btn-block">Change Password</button></a><br />
+          <button class="btn btn-danger btn-block" onclick="alert('Feature coming soon!');">Delete Account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

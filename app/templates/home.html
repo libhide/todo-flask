@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+{% endblock %}
+
+{% block content %}
+ 
+  <div class="cnt">
+    <p>
+      <label for="new-task">Add Item</label>
+      <input id="new-task" type="text" onkeydown="enterForEventAdd(this)">
+      <button id="addButton">Add</button>
+    </p>
+        
+    <h3>Todo</h3>
+    <ul id="incomplete-tasks">  
+      {% for item in todo %}
+        <li>
+          <input type="checkbox">
+          <label>{{ item }}</label>
+          <input type="text">
+          <button class="edit">Edit</button>
+          <button class="delete">Delete</button>
+        </li>
+      {% endfor %}
+    </ul>
+    
+    <h3>Completed</h3>
+    <ul id="completed-tasks">
+      {% for item in done %}
+        <li>
+          <input type="checkbox" checked>
+          <label>{{ item }}</label>
+          <input type="text">
+          <button class="edit">Edit</button>
+          <button class="delete">Delete</button>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <label class="save-label"></label> 
+
+{% endblock %}
+
+{% block script %}
+  <script type="text/javascript" src="{{ url_for('static', filename='home.js') }}"></script>
+{% endblock %}

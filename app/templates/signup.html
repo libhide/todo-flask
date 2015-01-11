@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='signup.css') }}">
+{% endblock %}
+
+{% block content %}
+  <div id="wrapper">
+    <form role="form" action="" method="POST" name="signup">
+      {{ form.hidden_tag() }}
+      <h2 style="margin: 0 0 30px 0;">Please Signup</h2>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="name" name="name" class="form-control" id="name" placeholder="Name" autofocus>
+      </div>
+      {% for error in form.name.errors %}
+        <span class="error">[{{ error }}]</span>
+      {% endfor %}
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+      </div>
+      {% for error in form.email.errors %}
+        <span class="error">[{{ error }}]</span>
+      {% endfor %}
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+      </div>
+      {% for error in form.password.errors %}
+        <span class="error">[{{ error }}]</span>
+      {% endfor %}
+      <button style="margin-top: 30px;" type="submit" class="btn btn-primary btn-block">Signup</button>
+    </form>
+  </div>
+{% endblock %}

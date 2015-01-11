@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
+{% endblock %}
+
+{% block content %}
+  <div id="wrapper">
+    <form role="form" action="" method="POST" name="login">
+      {{ form.hidden_tag() }}
+      <h2 style="margin: 0 0 30px 0;">Please login</h2>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="text" class="form-control" name="email" id="email" placeholder="Enter email" value="" autofocus >
+        {% for error in form.email.errors %}
+          <span class="error">[{{ error }}]</span>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+        {% for error in form.password.errors %}
+          <span class="error">[{{ error }}]</span>
+        {% endfor %}
+      </div>
+      <button style="margin-top: 30px;" type="submit" class="btn btn-success btn-block">Login</button>
+    </form>
+  </div>
+  <a href="/signup" class="signup-link">Don't have an account? Sign up! </a>
+{% endblock %}
