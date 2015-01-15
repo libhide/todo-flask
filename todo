@@ -1,0 +1,123 @@
+#! /usr/bin/python3
+import pickle
+import sys
+import os
+
+
+class Todo:
+    def __init__(self):
+        #GLOBAL VARIABLES
+        self.todo_list={}
+        self.home=os.environ['HOME']
+        self.GLOBAL_INDEX=0#number of tasks recieved up to date
+        #function definitions
+
+    def save_list(self):
+        "Saves the list to the home directory as currently set in the $HOME variable"
+        f=open(os.path.join(self.home,'.todo_list_pickle'),'wb')
+        pickle.dump(self.todo_list,f,3)
+        f.close()
+    def load_list(self):
+        "Loads the list from self.home directory as in te $HOME variable"
+        try:
+            f=open(os.path.join(self.home,'.todo_list_pickle'),'rb')
+            self.todo_list=pickle.load(f)
+            f.close()
+            self.GLOBAL_INDEX=len([i for i in self.todo_list if self.todo_list[i]['done']])
+        except Exception as e:print(e,'\nContinuing')#print the error
+    def add_task(self,string,deadline=None):
+        "Adds task string to the todo list"
+        index=self.GLOBAL_INDEX+1
+        self.todo_list[index]={'deadline':deadline,'done':False,'string':string}
+        self.GLOBAL_INDEX+=1
+    def mark_done(self,index):
+        "Marks the task with index as done"
+        self.todo_list[index]['done']=True
+    def show_undone(self,limit=None):
+        "Shows undone tasks limited by limit"
+        undone=[self.todo_list[i] for i in self.todo_list.keys() if not self.todo_list[i]['done']]
+        if limit!=None:show=undone[:limit]
+        else:show=undone
+        for task in undone:
+            print(task['string'],task['deadline'])
+    def show(self,limit=None):
+        "Shows last tasks limited by limit"
+        tasks=[self.todo_list[i] for i in sorted(list(self.todo_list.keys()),reverse=True)]
+        if limit!=None:show=tasks[:limit]
+        else:show=tasks
+        for task in show:
+            t=task
+            x='[ ]'
+            if t['done']:x='[x]'
+            x+='    '+t['string']
+            print(x)
+    def help(self):
+        "Display the help page"
+        text='''
+        Todo list script. More at 
+        https://github.com/Ratik96/todo.git
+
+        -----------------------------------
+        USEAGE
+        todo [options] [variables]
+        -----------------------------------
+        OPTIONS
+        -l [<limit>]                                        List all elements in todo. Limit to <limit> items
+                                                            Omitting any options calls this flag
+        -d <index1> <index2>                                Mark the provided index items as done.
+        -a <string> [<deadline>]                            Add a new item with text as string. deadline is optional
+        -u [<limit>]                                        Show the items not marked done. Limit to <limit> items
+        -h  , --help                                        Show this help text and exit
+        '''
+        print(text)
+        return 0
+def action_caller(argv):
+    "Calls the above functions and returns an exit code"
+    td=Todo()
+    td.load_list()
+    if len(argv)==1:
+        #only todo was called
+        td.show()
+    elif len(argv)>1:
+        #options were specified
+        if '-' not in argv[1]:
+            return 2#error code 2==error in argv
+        options=argv[1]
+        options=options.strip('-')
+        if options=='h' or options=='help':
+            try:td.help()
+            except:return 3#error code 3==error in help
+        if options=='u':
+            #show undone
+            try:limit=argv[2]
+            except:limit=None
+            try:td.show_undone(limit)
+            except:return 1#error code 1==error in show
+        if options=='l':
+            #list elements
+            try:limit=argv[2]
+            except:limit=None
+            try:td.show(limit)
+            except:return 1#error code 1==error in show
+        if options=='d':
+            #mark indices done
+            if len(argv)<3:
+                return 2#error code 2==error in argv
+            else:
+                indices=argv[2:]
+                for i in indices:
+                   td.mark_done(i)
+        if options=='a':
+            #add a new task
+            if not 2<len(argv)<4:
+                return 2#error code 2==error in argv
+            else:
+                variables=argv[2:]
+                try:string,deadline=variables
+                except:string=variables[0]
+                td.add_task(string)
+    td.save_list()#save todo list
+    return 0#all OK
+
+if __name__=='__main__':
+    sys.exit(action_caller(sys.argv))
