@@ -146,8 +146,7 @@ class WorkList:
         string += '\n'
         max_length = len(self.__items)
         for index, item in enumerate(self.__items):
-            string += str(index).zfill(max_length) + ' ' +
-            item.__str__() + '\n'
+            string += str(index).zfill(max_length) + ' ' + item.__str__() + '\n'
         return string
 
     def add_item(self, string, deadline=None):
@@ -209,13 +208,13 @@ class Todo:
 
     def mark_done(self, index):
         '''Marks the item in the current list with index specified as done'''
-        if type(index) != type(0):
+        if isinstance(index) != isinstance(0):
             infex = int(index)
         self.__current_list.mark_done(index)
 
     def delete_item(self, index):
         '''Deletes the item in the current list with index specified as done'''
-        if type(index) != type(0):
+        if isinstance(index) != isinstance(0):
             infex = int(index)
         self.__current_list.delete_item(index)
 
