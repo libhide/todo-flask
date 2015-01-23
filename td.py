@@ -70,7 +70,7 @@ class Item:
     def __str__(self):
         '''Pretty print the item.Implements laziness to not eat cpu'''
         # check for an already existing string
-        if self.__string != None:
+        if self.__string is not None:
             return self.__string
         # if None then recompute and return
         string = ''
@@ -82,7 +82,7 @@ class Item:
         # space
         string += ' '
         # deadline
-        if self.__deadline == None:
+        if self.__deadline is None:
             string += '--------------------------'
         else:
             string += self.__deadline.__str__()
