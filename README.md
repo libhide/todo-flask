@@ -24,3 +24,7 @@ Requirements
 - sqlalchemy-migrate==0.9.2
 - sqlparse==0.1.14
 - wsgiref==0.1.2
+
+Bonus
+-----
+**td.py** is a command line todo list tool created by http://github.com/theSage21/
